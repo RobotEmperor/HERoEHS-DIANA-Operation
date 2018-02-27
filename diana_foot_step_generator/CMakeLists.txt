@@ -44,7 +44,7 @@ generate_messages(
 # Catkin specific configuration
 ################################################################################
 catkin_package(
-  CATKIN_DEPENDS message_runtime std_msgs geometry_msgs robotis_controller_msgs thormang3_walking_module_msgs
+  CATKIN_DEPENDS message_runtime std_msgs geometry_msgs robotis_controller_msgs diana_online_walking_module_msgs
 )
 
 ################################################################################
