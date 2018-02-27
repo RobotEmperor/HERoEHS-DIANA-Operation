@@ -36,10 +36,10 @@ void initialize(void)
 {
   ros::NodeHandle nh;
 
-  g_get_ref_step_data_client      = nh.serviceClient<diana_online_walking_module_msgs::GetReferenceStepData>("/heroehs/walking/get_reference_step_data");
-  g_add_step_data_array_client    = nh.serviceClient<diana_online_walking_module_msgs::AddStepDataArray>("/robotis/walking/add_step_data");
-  g_set_balance_param_client      = nh.serviceClient<diana_online_walking_module_msgs::SetBalanceParam>("/robotis/walking/set_balance_param");
-  g_is_running_client             = nh.serviceClient<diana_online_walking_module_msgs::IsRunning>("/robotis/walking/is_running");
+  g_get_ref_step_data_client      = nh.serviceClient<diana_online_walking_module_msgs::GetReferenceStepData>("/heroehs/online_walking/get_reference_step_data");
+  g_add_step_data_array_client    = nh.serviceClient<diana_online_walking_module_msgs::AddStepDataArray>("/heroehs/online_walking/add_step_data");
+  g_set_balance_param_client      = nh.serviceClient<diana_online_walking_module_msgs::SetBalanceParam>("/heroehs/online_walking/set_balance_param");
+  g_is_running_client             = nh.serviceClient<diana_online_walking_module_msgs::IsRunning>("/heroehs/online_walking/is_running");
 
   g_walking_module_status_msg_sub = nh.subscribe("/heroehs/status", 10, walkingModuleStatusMSGCallback);
 
