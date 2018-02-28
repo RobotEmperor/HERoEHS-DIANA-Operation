@@ -34,12 +34,12 @@ FootStepGenerator::FootStepGenerator()
 
   step_time_sec_ = 0.5;
   start_end_time_sec_ = 1.6;
-  dsp_ratio_ = 0.2;
+  dsp_ratio_ = 0.3;
 
-  foot_z_swap_m_ = 0.08;
+  foot_z_swap_m_ = 0.06;
   body_z_swap_m_ = 0.01;
 
-  default_y_feet_offset_m_ = 0.21;
+  default_y_feet_offset_m_ = 0.24;
 
   previous_step_type_ = STOP_WALKING;
 
