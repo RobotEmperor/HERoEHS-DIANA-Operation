@@ -1,0 +1,14 @@
+updating_duration: 1.5
+
+arm_roll_gyro_p_gain: 0.1
+arm_roll_gyro_d_gain: 0
+
+arm_pitch_gyro_p_gain: 0
+arm_pitch_gyro_d_gain: 0
+
+arm_yaw_gyro_p_gain: 0
+arm_yaw_gyro_d_gain: 0
+
+arm_copFz_p_gain: 0.012
+arm_copFz_d_gain: 0.012
+

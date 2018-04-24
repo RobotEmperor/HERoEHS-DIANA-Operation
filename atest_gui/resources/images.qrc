@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/icon.png</file>
+        <file>images/1.PNG</file>
+        <file>images/12.PNG</file>
+        <file>images/hanyang.png</file>
+        <file>images/ros.PNG</file>
+        <file>images/NVIDIA.png</file>
+        <file>images/sook.png</file>
+        <file>images/ski_robot1.PNG</file>
+        <file>images/pa_owner_03.png</file>
+        <file>images/coronet.png</file>
+    </qresource>
+</RCC>

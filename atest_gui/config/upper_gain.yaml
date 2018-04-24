@@ -1,0 +1,11 @@
+updating_duration: 1.5
+
+waist_roll_gyro_p_gain: 0.04
+waist_roll_gyro_d_gain: 0
+
+waist_yaw_gyro_p_gain: 0
+waist_yaw_gyro_d_gain: 0
+
+waist_copFz_p_gain: 0.012
+waist_copFz_d_gain: 0
+
