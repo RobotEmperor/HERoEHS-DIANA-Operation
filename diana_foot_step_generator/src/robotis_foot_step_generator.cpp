@@ -273,6 +273,8 @@ void FootStepGenerator::getStepData(diana_online_walking_module_msgs::AddStepDat
 //}
 
 //
+
+
 bool FootStepGenerator::calcStep(const diana_online_walking_module_msgs::StepData& ref_step_data, int previous_step_type,  int desired_step_type)
 {
   int direction = 0;
@@ -291,9 +293,12 @@ bool FootStepGenerator::calcStep(const diana_online_walking_module_msgs::StepDat
   //the below local does not means real local coordinate.
   //it is just for calculating step data.
   //the local coordinate will be decide by the moving foot of ref step data
+
   Eigen::MatrixXd mat_lf_to_local = getTransformationXYZRPY(0, -0.5*default_y_feet_offset_m_, 0, 0, 0, 0);
   Eigen::MatrixXd mat_rf_to_local = getTransformationXYZRPY(0,  0.5*default_y_feet_offset_m_, 0, 0, 0, 0);
+
   Eigen::MatrixXd mat_global_to_local, mat_local_to_global;
+
   if(ref_step_data.position_data.moving_foot == diana_online_walking_module_msgs::StepPositionData::RIGHT_FOOT_SWING)
   {
     mat_global_to_local = mat_g_to_rf*mat_rf_to_local;
@@ -306,6 +311,8 @@ bool FootStepGenerator::calcStep(const diana_online_walking_module_msgs::StepDat
     mat_local_to_global = getInverseTransformation(mat_global_to_local);
     mat_rf_to_local     = getInverseTransformation(mat_g_to_rf) * mat_global_to_local;
   }
+
+
 
   Eigen::MatrixXd mat_local_to_rf = mat_local_to_global * mat_g_to_rf;
   Eigen::MatrixXd mat_local_to_lf = mat_local_to_global * mat_g_to_lf;
@@ -381,97 +388,6 @@ bool FootStepGenerator::calcStep(const diana_online_walking_module_msgs::StepDat
         }
         step_data_array_.push_back(stp_data[0]);
       }
-
-//      if(previous_step_type == FORWARD_WALKING || previous_step_type == BACKWARD_WALKING)
-//      {
-//        if(fabs(poseLtoRF.x - poseLtoLF.x) >= 0.001)
-//        {
-//          stp_data[0].time_data.abs_step_time += step_time_sec_;
-//
-//          if(ref_step_data.position_data.moving_foot == diana_online_walking_module_msgs::StepPositionData::LEFT_FOOT_SWING)
-//          {
-//            stp_data[0].position_data.moving_foot = diana_online_walking_module_msgs::StepPositionData::RIGHT_FOOT_SWING;
-//            stp_data[0].position_data.right_foot_pose.x = stp_data[0].position_data.left_foot_pose.x;
-//          }
-//          else {
-//            stp_data[0].position_data.moving_foot = diana_online_walking_module_msgs::StepPositionData::LEFT_FOOT_SWING;
-//            stp_data[0].position_data.left_foot_pose.x = stp_data[0].position_data.right_foot_pose.x;
-//          }
-//
-//          step_data_array_.push_back(stp_data[0]);
-//        }
-//      }
-//      else if(previous_step_type == LEFTWARD_WALKING || previous_step_type == RIGHTWARD_WALKING)
-//      {
-//        if(fabs(poseLtoRF.y - poseLtoLF.y) >= default_y_feet_offset_m_ - 0.001)
-//        {
-//          stp_data[0].time_data.abs_step_time += step_time_sec_;
-//
-//          if(ref_step_data.position_data.moving_foot == diana_online_walking_module_msgs::StepPositionData::LEFT_FOOT_SWING)
-//          {
-//            stp_data[0].position_data.moving_foot = diana_online_walking_module_msgs::StepPositionData::RIGHT_FOOT_SWING;
-//            stp_data[0].position_data.right_foot_pose.y = stp_data[0].position_data.left_foot_pose.y - default_y_feet_offset_m_;
-//          }
-//          else
-//          {
-//            stp_data[0].position_data.moving_foot = diana_online_walking_module_msgs::StepPositionData::LEFT_FOOT_SWING;
-//            stp_data[0].position_data.left_foot_pose.y = stp_data[0].position_data.right_foot_pose.y + default_y_feet_offset_m_;
-//          }
-//
-//          step_data_array_.push_back(stp_data[0]);
-//        }
-//      }
-//      else if(previous_step_type == LEFT_ROTATING_WALKING || previous_step_type == RIGHT_ROTATING_WALKING)
-//      {
-//        if(fabs(poseLtoRF.yaw - poseLtoLF.yaw) > 0.0000001)
-//        {
-//          stp_data[0].time_data.abs_step_time += step_time_sec_;
-//          if(ref_step_data.position_data.moving_foot == diana_online_walking_module_msgs::StepPositionData::LEFT_FOOT_SWING)
-//          {
-//            stp_data[0].position_data.moving_foot = diana_online_walking_module_msgs::StepPositionData::RIGHT_FOOT_SWING;
-//            stp_data[0].position_data.right_foot_pose.x   = stp_data[0].position_data.left_foot_pose.x;
-//            stp_data[0].position_data.right_foot_pose.y   = stp_data[0].position_data.left_foot_pose.y - default_y_feet_offset_m_;
-//            stp_data[0].position_data.right_foot_pose.yaw = stp_data[0].position_data.left_foot_pose.yaw;
-//          }
-//          else
-//          {
-//            stp_data[0].position_data.moving_foot = diana_online_walking_module_msgs::StepPositionData::LEFT_FOOT_SWING;
-//            stp_data[0].position_data.left_foot_pose.x   = stp_data[0].position_data.right_foot_pose.x;
-//            stp_data[0].position_data.left_foot_pose.y   = stp_data[0].position_data.right_foot_pose.y + default_y_feet_offset_m_;
-//            stp_data[0].position_data.left_foot_pose.yaw = stp_data[0].position_data.right_foot_pose.yaw;
-//          }
-//          step_data_array_.push_back(stp_data[0]);
-//        }
-//      }
-//      else if(previous_step_type == STOP_WALKING)
-//      {
-//        if((fabs(poseLtoRF.yaw - poseLtoLF.yaw) > 0.0000001)
-//            || (fabs(poseLtoRF.y - poseLtoLF.y) >= default_y_feet_offset_m_ - 0.001)
-//            || (fabs(poseLtoRF.x - poseLtoLF.x) >= 0.001))
-//        {
-//          stp_data[0].time_data.abs_step_time += step_time_sec_;
-//          if(ref_step_data.position_data.moving_foot == diana_online_walking_module_msgs::StepPositionData::LEFT_FOOT_SWING)
-//          {
-//            stp_data[0].position_data.moving_foot = diana_online_walking_module_msgs::StepPositionData::RIGHT_FOOT_SWING;
-//            stp_data[0].position_data.right_foot_pose.x   = stp_data[0].position_data.left_foot_pose.x;
-//            stp_data[0].position_data.right_foot_pose.y   = stp_data[0].position_data.left_foot_pose.y - default_y_feet_offset_m_;
-//            stp_data[0].position_data.right_foot_pose.yaw = stp_data[0].position_data.left_foot_pose.yaw;
-//          }
-//          else
-//          {
-//            stp_data[0].position_data.moving_foot = diana_online_walking_module_msgs::StepPositionData::LEFT_FOOT_SWING;
-//            stp_data[0].position_data.left_foot_pose.x   = stp_data[0].position_data.right_foot_pose.x;
-//            stp_data[0].position_data.left_foot_pose.y   = stp_data[0].position_data.right_foot_pose.y + default_y_feet_offset_m_;
-//            stp_data[0].position_data.left_foot_pose.yaw = stp_data[0].position_data.right_foot_pose.yaw;
-//          }
-//          step_data_array_.push_back(stp_data[0]);
-//        }
-//      }
-//      else
-//      {
-//        return false;
-//      }
-
 
       stp_data[1] = stp_data[0];
       if(desired_step_type == FORWARD_WALKING || desired_step_type == BACKWARD_WALKING || desired_step_type == STOP_WALKING)
@@ -595,6 +511,7 @@ void FootStepGenerator::calcFBStep(const diana_online_walking_module_msgs::StepD
     stp_data[0].time_data.dsp_ratio = dsp_ratio_;
     stp_data[0].position_data.body_z_swap = body_z_swap_m_;
     stp_data[0].position_data.foot_z_swap = foot_z_swap_m_;
+
     if(stp_data[0].position_data.moving_foot == diana_online_walking_module_msgs::StepPositionData::LEFT_FOOT_SWING)
     {
       stp_data[0].position_data.moving_foot = diana_online_walking_module_msgs::StepPositionData::RIGHT_FOOT_SWING;
@@ -610,6 +527,7 @@ void FootStepGenerator::calcFBStep(const diana_online_walking_module_msgs::StepD
     {
       stp_data[stp_idx] = stp_data[stp_idx-1];
       stp_data[stp_idx].time_data.abs_step_time += step_time_sec_;
+
       if(stp_data[stp_idx].position_data.moving_foot == diana_online_walking_module_msgs::StepPositionData::LEFT_FOOT_SWING)
       {
         stp_data[stp_idx].position_data.moving_foot = diana_online_walking_module_msgs::StepPositionData::RIGHT_FOOT_SWING;
